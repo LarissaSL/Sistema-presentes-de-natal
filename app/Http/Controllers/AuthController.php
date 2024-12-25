@@ -3,9 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
+
 
 class AuthController extends Controller
 {
+
+    protected $userModel;
+
+    public function __construct()
+    {
+        $this->userModel = new User(); 
+    }
+
     public function index()
     {
         return view('index');
@@ -13,25 +23,29 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        // Validar os campos
-        $validatedData = $request->validate(
-            [
-                'email' => 'required|email',
-                'password' => 'required|min:6|max:50'
-            ],
-            [
-                'email.required' => 'O email precisa ser preenchido.',
-                'email.email' => 'Digite um endereço de email.',
+        // Validando os dados
+        $validatedData = User::validatedData($request->all());
 
-                'password.required' => 'A senha precisa ser preenchida.',
-                'password.min' => 'A senha precisa ter no minimo :min de caracteres.',
-                'password.max' => 'A senha precisa ter no minimo :max de caracteres.'
-            ]
-        );
+        // Se a validação falhar, redireciona de volta com erros
+        if ($validatedData->fails()) {
+            return back()->withErrors($validatedData)->withInput();
+        }
 
-        // Verificar se o Usuário está no sistema
+        // Pegar os dados do formulário
+        $email = $request->email;
+        $password = $request->password;
 
-        // Retornar a devolutiva de Login
+        // Realizar o Login
+        $validatedLogin = User::loginUser($email, $password);
+
+        if (!$validatedLogin) {
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('loginError', 'Email ou senha incorretos.'); 
+        }
+        
+        return redirect()->route('main.dashboard');
 
     }
 

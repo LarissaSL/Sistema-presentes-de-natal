@@ -3,46 +3,47 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
 
-class User extends Authenticatable
+class User extends Model
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
-
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
-
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
+    public static function validatedData(array $data)
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
+        return Validator::make(
+            $data,
+            [
+                'email' => 'required|email',
+                'password' => 'required|min:6|max:50',
+            ],
+            [
+                'email.required' => 'O email precisa ser preenchido.',
+                'email.email' => 'Digite um endereço de email válido.',
+                'password.required' => 'A senha precisa ser preenchida.',
+                'password.min' => 'A senha precisa ter no mínimo :min caracteres.',
+                'password.max' => 'A senha precisa ter no máximo :max caracteres.',
+            ]
+        );
+    }
+
+    public static function loginUser($email, $password)
+    {
+        // Verificar se o usuário existe
+        $user = User::where('email', $email)->first();
+
+        // Se o usuário não existir ou a senha estiver incorreta
+        if (!$user || !Hash::check($password, $user->password)) {
+            return false;
+        }
+
+        session([
+            'user' => [
+                'id' => $user->id,
+                'username' => $user->name
+            ]
+        ]);
+
+        return true;
     }
 }

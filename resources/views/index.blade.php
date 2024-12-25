@@ -19,7 +19,11 @@
                 @error('password')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
+                @if (session('loginError'))
+                    <div class="text-danger">{{ session('loginError') }}</div>
+                @endif
             </div>
+
 
             <button type="submit" class="btn btn-primary">Login</button>
         </form>
