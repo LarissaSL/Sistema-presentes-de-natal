@@ -12,24 +12,24 @@
             <div class="row justify-content-center">
                 <div class="col-md-6">
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="name" name="name" value="{{ session('user.name') }}" required>
+                        <input type="text" class="form-control" id="name" name="name" value="{{ $name }}">
                         <label for="name">Nome</label>
                     </div>
                     
                     <div class="form-floating mb-3">
-                        <input type="email" class="form-control" id="email" name="email" value="{{ session('user.email') }}" required>
+                        <input type="email" class="form-control" id="email" name="email" value="{{ $email }}">
                         <label for="email">Email</label>
                     </div>
 
                     {{-- Campos para a senha --}}
                     
                     <div class="form-floating mb-3">
-                        <input type="password" class="form-control" id="password" name="password" placeholder="Digite uma nova senha">
+                        <input type="password" class="form-control" id="password" name="password" placeholder="senha">
                         <label for="password">Senha</label>
                     </div>
 
                     <div class="form-floating mb-3">
-                        <input type="password" class="form-control" id="password" name="passwordConfirmed" placeholder="Digite uma nova senha">
+                        <input type="password" class="form-control" id="password" name="passwordConfirmed" placeholder="confirmar senha">
                         <label for="password">Confirmar nova senha</label>
                     </div>
                     

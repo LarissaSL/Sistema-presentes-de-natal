@@ -21,7 +21,7 @@
 
 <ul class="nav justify-content-center">
     <li class="nav-item">
-        <a class="nav-link" href="{{ route('user.myProfile') }}">Meu Perfil</a>
+        <a class="nav-link" href="{{ route('user.myProfile', ['id' => session('user.id')]) }}">Meu Perfil</a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="#">Contatos</a>
