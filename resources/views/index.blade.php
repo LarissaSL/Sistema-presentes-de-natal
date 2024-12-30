@@ -28,7 +28,7 @@
             <button type="submit" class="btn btn-primary">Login</button>
         </form>
         <div class="mt-3">
-            <a href="{{ route('auth.register') }}" class="btn btn-secondary">Cadastrar</a>
+            <a href="{{ route('main.register') }}" class="btn btn-secondary">Cadastrar</a>
         </div>
     </div>
 @endsection

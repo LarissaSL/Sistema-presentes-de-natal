@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\UserService;
-use Illuminate\Support\Facades\View;
 
 class AuthController extends Controller
 {
@@ -29,7 +28,7 @@ class AuthController extends Controller
             return redirect()->back()->withInput()->with('loginError', 'Email ou senha incorretos.');
         }
 
-        return redirect()->route('main.dashboard');
+        return redirect()->route('user.dashboard');
     }
 
     public function logout() {
