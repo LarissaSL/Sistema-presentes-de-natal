@@ -20,7 +20,11 @@ Route::controller(MainController::class)->group(function () {
 });
 
 Route::controller(UserController::class)->group(function() {
-    Route::middleware([CheckUserLogged::class])->group(function() {
-        Route::get('/dashboard', 'index')->name('user.dashboard');
+    Route::prefix('/user')->group(function (){
+        Route::middleware([CheckUserLogged::class])->group(function() {
+            Route::get('/dashboard', 'index')->name('user.dashboard');
+            Route::get('/my-profile', 'myProfile')->name('user.myProfile');
+            Route::get('/{id}', 'update')->name('user.update');
+        });
     });
 });
