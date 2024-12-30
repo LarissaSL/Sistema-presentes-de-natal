@@ -1,15 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Dashboard</title>
-</head>
-<body>
+@extends('layouts.main_layout')
+
+@include('layouts.nav_layout')
+
+@section('content')
     <h1>Dashboard</h1>
-    <p>@session('user')
-        {{ session('user.id') }}
-    @endsession</p>
-</body>
-</html>
+@endsection
