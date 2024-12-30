@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\OperationsService;
+use App\Services\UserService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -13,11 +12,7 @@ class UserController extends Controller
     }
 
     public function myProfile($id) {
-        // Receber o ID e Descriptografar
-        $userId = OperationsService::decryptId($id);
-    
-        // Verificar se o Usuário existe
-        $user = DB::table('users')->where('id', $userId)->first();
+        $user = UserService::getUserByDecryptedId($id);
     
         if (!$user) {
             return redirect()->back()->withErrors(['notFoundUser' => 'Usuário não encontrado.']);

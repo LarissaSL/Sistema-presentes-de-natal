@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\OperationsService;
 use Illuminate\Database\Eloquent\Model;
 
 class User extends Model
@@ -11,5 +12,4 @@ class User extends Model
     {
         return $this->hasMany(Contact::class);
     }
-
 }

@@ -9,6 +9,17 @@ use Illuminate\Support\Facades\Hash;
 
 class UserService
 {
+    public static function getUserByDecryptedId($encryptedId)
+    {
+        // Receber o ID e Descriptografar
+        $userId = OperationsService::decryptId($encryptedId);
+
+        // Verificar se o Usuário existe
+        $user = DB::table('users')->where('id', $userId)->first();
+
+        return $user;
+    }
+
     public static function validatedDataLogin(array $data)
     {
         return Validator::make(
