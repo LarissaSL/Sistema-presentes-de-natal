@@ -23,8 +23,8 @@ Route::controller(UserController::class)->group(function() {
     Route::prefix('/user')->group(function (){
         Route::middleware([CheckUserLogged::class])->group(function() {
             Route::get('/dashboard', 'index')->name('user.dashboard');
-            Route::get('/my-profile/{id}', 'myProfile')->name('user.myProfile');
-            Route::get('/{id}', 'update')->name('user.update');
+            Route::get('/my-profile/{id}', 'read')->name('user.myProfile');
+            Route::POST('/my-profile/update/{id}', 'update')->name('user.update');
         });
     });
 });

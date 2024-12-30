@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Services\UserService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -11,7 +13,8 @@ class UserController extends Controller
         return view('users.dashboard');
     }
 
-    public function myProfile($id) {
+    public function read($id) {
+        // Buscar o Usuário
         $user = UserService::getUserByDecryptedId($id);
     
         if (!$user) {
@@ -26,15 +29,29 @@ class UserController extends Controller
     }
 
     public function update(Request $request, $id) {
-        // Receber o ID e Descriptografar
-        echo $id;
+        // Buscar o Usuário
+        $user = UserService::getUserByDecryptedId($id);
+    
+        if (!$user) {
+            return redirect()->back()->withErrors(['notFoundUser' => 'Usuário não encontrado.']);
+        } 
 
-        // Verificar se o Usuario existe
+        $userId = $user->id;
+
+        // Validar os campos
+        $validatedData = UserService::validatedDataToUpdateUser($request->all(), $userId);
+
+        if ($validatedData->fails()) {
+            return redirect()->back()->withInput()->withErrors($validatedData);
+        }
 
         // Fazer o Update dos Campos
-
-        // Notificar o usuario em caso de Sucesso
-
-        echo "Atualizando";
+        $statusToUpdate = UserService::updatedUser($request->email, $request->name, $request->password, $userId);
+        
+        if(!$statusToUpdate) {
+            return redirect()->back()->withErrors(['updateFailed' => 'Falha ao alterar, tente novamente.']);
+        }
+        
+        return redirect()->back()->with('success', 'Alterações feitas com sucesso!');
     }
 }

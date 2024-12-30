@@ -20,6 +20,26 @@ class UserService
         return $user;
     }
 
+    public static function updatedUser($email, $name, $password, $userId)
+    {
+        try {
+            DB::table('users')
+            ->where('id', $userId)
+            ->update([
+                'updated_at' => date('Y:m:d H:i:s'),
+                'email' => $email,
+                'name' => $name,
+                'password' => $password ? bcrypt($password) : DB::raw('password'),
+            ]);
+        } catch (\Throwable $th) {
+            return false;
+        }
+
+        session(['user.username' => $name]);
+
+        return true;
+    }
+
     public static function validatedDataLogin(array $data)
     {
         return Validator::make(
@@ -34,6 +54,31 @@ class UserService
                 'password.required' => 'A senha precisa ser preenchida.',
                 'password.min' => 'A senha precisa ter no mínimo :min caracteres.',
                 'password.max' => 'A senha precisa ter no máximo :max caracteres.',
+            ]
+        );
+    }
+
+    public static function validatedDataToUpdateUser(array $data, $userId)
+    {
+        return Validator::make(
+            $data,
+            [
+                'name' => 'required',
+                'email' => 'required|email|unique:users,email,' . $userId,
+                'password' => 'nullable|min:6|max:50',
+                'passwordConfirmed' => 'nullable|same:password|min:6|max:50',
+            ],
+            [
+                'name.required' => 'O nome precisa ser preenchido.',
+                'email.required' => 'O email precisa ser preenchido.',
+                'email.email' => 'Digite um endereço de email válido.',
+                'email.unique' => 'Endereço de email já está em uso.',
+                'password.required' => 'A senha precisa ser preenchida.',
+                'password.min' => 'A senha precisa ter no mínimo :min caracteres.',
+                'password.max' => 'A senha precisa ter no máximo :max caracteres.',
+                'passwordConfirmed.same' => 'A confirmação da senha precisa ser igual à senha.',
+                'passwordConfirmed.min' => 'A confirmação da senha precisa ter no mínimo :min caracteres.',
+                'passwordConfirmed.max' => 'A confirmação da senha precisa ter no máximo :max caracteres.',
             ]
         );
     }

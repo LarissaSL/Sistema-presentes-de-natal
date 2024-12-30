@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Services\OperationsService;
 use Illuminate\Database\Eloquent\Model;
 
 class User extends Model
