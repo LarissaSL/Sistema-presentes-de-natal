@@ -9,6 +9,21 @@ use Illuminate\Support\Facades\Hash;
 
 class UserService
 {
+    public static function createUser($name, $email, $password) {
+        try {
+            DB::table('users')->insert([
+                'name' => $name,
+                'email' => $email,
+                'password' => bcrypt($password),
+                'created_at' => date('Y:m:d H:i:s'),
+            ]);
+        } catch (\Throwable $th) {
+            return false;
+        }
+
+        return true;
+    }
+    
     public static function getUserByDecryptedId($encryptedId)
     {
         // Receber o ID e Descriptografar
@@ -76,6 +91,32 @@ class UserService
                 'password.required' => 'A senha precisa ser preenchida.',
                 'password.min' => 'A senha precisa ter no mínimo :min caracteres.',
                 'password.max' => 'A senha precisa ter no máximo :max caracteres.',
+                'passwordConfirmed.same' => 'A confirmação da senha precisa ser igual à senha.',
+                'passwordConfirmed.min' => 'A confirmação da senha precisa ter no mínimo :min caracteres.',
+                'passwordConfirmed.max' => 'A confirmação da senha precisa ter no máximo :max caracteres.',
+            ]
+        );
+    }
+
+    public static function validatedDataToRegisterUser(array $data)
+    {
+        return Validator::make(
+            $data,
+            [
+                'name' => 'required',
+                'email' => 'required|email|unique:users,email',
+                'password' => 'required|min:6|max:50',
+                'passwordConfirmed' => 'required|same:password|min:6|max:50',
+            ],
+            [
+                'name.required' => 'O nome precisa ser preenchido.',
+                'email.required' => 'O email precisa ser preenchido.',
+                'email.email' => 'Digite um endereço de email válido.',
+                'email.unique' => 'Endereço de email já está em uso.',
+                'password.required' => 'A senha precisa ser preenchida.',
+                'password.min' => 'A senha precisa ter no mínimo :min caracteres.',
+                'password.max' => 'A senha precisa ter no máximo :max caracteres.',
+                'passwordConfirmed.required' => 'A confirmação da senha precisa ser preenchida.',
                 'passwordConfirmed.same' => 'A confirmação da senha precisa ser igual à senha.',
                 'passwordConfirmed.min' => 'A confirmação da senha precisa ter no mínimo :min caracteres.',
                 'passwordConfirmed.max' => 'A confirmação da senha precisa ter no máximo :max caracteres.',

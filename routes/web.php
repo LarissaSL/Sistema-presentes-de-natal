@@ -14,12 +14,12 @@ Route::controller(AuthController::class)->group(function () {
 
 Route::controller(MainController::class)->group(function () {
     Route::get('/', 'index')->name('main.index');
-
-    Route::get('/register', 'register')->name('main.register');
-    Route::get('/registerSubmit', 'registerSubmit')->name('main.registerSubmit');
 });
 
 Route::controller(UserController::class)->group(function() {
+    Route::get('/register', 'register')->name('user.register');
+    Route::POST('/register', 'registerSubmit')->name('user.registerSubmit');
+
     Route::prefix('/user')->group(function (){
         Route::middleware([CheckUserLogged::class])->group(function() {
             Route::get('/dashboard', 'index')->name('user.dashboard');
