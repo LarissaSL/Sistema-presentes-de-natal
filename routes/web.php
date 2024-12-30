@@ -3,12 +3,13 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\UserController;
+use App\Http\Middleware\CheckUserLogged;
 use Illuminate\Support\Facades\Route;
 
 Route::controller(AuthController::class)->group(function () {
-    Route::POST('/login', 'login')->name('auth.login');
-    Route::POST('/logout', 'logout')->name('auth.logout');
-    
+    Route::get('/login', 'login')->name('auth.login');
+    Route::POST('/login', 'loginSubmit')->name('auth.loginSubmit');
+    Route::get('/logout', 'logout')->name('auth.logout');
 });
 
 Route::controller(MainController::class)->group(function () {
@@ -19,5 +20,7 @@ Route::controller(MainController::class)->group(function () {
 });
 
 Route::controller(UserController::class)->group(function() {
-    Route::get('/dashboard', 'index')->name('user.dashboard');
+    Route::middleware([CheckUserLogged::class])->group(function() {
+        Route::get('/dashboard', 'index')->name('user.dashboard');
+    });
 });

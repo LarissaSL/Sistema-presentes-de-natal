@@ -8,5 +8,8 @@
 </head>
 <body>
     <h1>Dashboard</h1>
+    <p>@session('user')
+        {{ session('user.id') }}
+    @endsession</p>
 </body>
 </html>

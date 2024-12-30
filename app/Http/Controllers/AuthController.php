@@ -7,8 +7,11 @@ use App\Services\UserService;
 
 class AuthController extends Controller
 {
+    public function login()  {
+        return view('login');
+    }
 
-    public function login(Request $request)
+    public function loginSubmit(Request $request)
     {
         // Validando os dados
         $validatedDataLogin = UserService::validatedDataLogin($request->all());
@@ -32,6 +35,7 @@ class AuthController extends Controller
     }
 
     public function logout() {
-        echo 'Fazer Logout';
+        session()->forget('user');
+        return redirect()->route('main.index');
     }
 }
