@@ -1,25 +1,51 @@
+@php
+    use App\Enums\RelationshipType;
+@endphp
+
+@section('css')
+    <link rel="stylesheet" href="{{ asset('assets/css/relationshipType.css') }}">
+@endsection
+
+
 <div class="row">
     <div class="col">
-        <div class="card p-4">
+        <div class="card p-4 my-3">
             <div class="row">
                 <div class="col">
-                    <h4 class="text-info">{{ $contact['title'] }}</h4>
-                    <small class="text-secondary"><span class="opacity-75 me-2">Created
-                            at:</span><strong>{{ date('Y-m-d H:i:s', strtotime($contact['created_at'])) }}</strong></small>
-                    @if ($contact['created_at'] != $contact['updated_at'])
-                        <small class="text-secondary ms-5"><span class="opacity-75 me-2">Updated
-                                at:</span><strong>{{ date('Y-m-d H:i:s', strtotime($contact['updated_at'])) }}</strong></small>
+                    <h3 class="text-dark">Contato {{ $loop->index + 1 }}</h3>
+                    <h4 class="text-dark">{{ $contact->name }}</h4>
+
+
+                    <div class="alert {{ match ($contact->relationship_type) {
+                        'Familia' => 'familia',
+                        'Amigo' => 'amigo',
+                        'Trabalho' => 'trabalho',
+                        'Romântico' => 'romantico',
+                        'Conhecido' => 'conhecido',
+                        default => 'outros',
+                    } }}"
+                        role="alert">
+                        {{ $contact->relationship_type }}
+                    </div>
+
+                    <small class="text-secondary"><span class="opacity-75 me-2">Criado em:
+                        </span><strong>{{ date('Y-m-d H:i:s', strtotime($contact->created_at)) }}</strong></small>
+                    @if ($contact->updated_at && $contact->created_at != $contact->updated_at)
+                        <small class="text-secondary ms-5"><span class="opacity-75 me-2">Atualizado em:
+                            </span><strong>{{ date('Y-m-d H:i:s', strtotime($contact->updated_at)) }}</strong></small>
                     @endif
                 </div>
                 <div class="col text-end">
-                    <a href="{{ route('contact.update', ['id' => Crypt::encrypt($contact['id'])]) }}"
-                        class="btn btn-outline-secondary btn-sm mx-1"><i class="fa-regular fa-pen-to-square"></i></a>
-                    <a href="{{ route('contact.delete', ['id' => Crypt::encrypt($contact['id'])]) }}"
-                        class="btn btn-outline-danger btn-sm mx-1"><i class="fa-regular fa-trash-can"></i></a>
+                    <a href="{{ route('contact.read', ['id' => Crypt::encrypt($contact->id)]) }}"
+                        class="me-3 text-decoration-none">
+                        <ion-icon name="create" style="font-size: 30px;"></ion-icon>
+                    </a>
+                    <a href="{{ route('contact.delete', ['id' => Crypt::encrypt($contact->id)]) }}"
+                        class="text-danger text-decoration-none">
+                        <ion-icon name="close-circle" style="font-size: 30px;"></ion-icon>
+                    </a>
                 </div>
             </div>
-            <hr>
-            <p class="text-secondary">{{ $contact['text'] }}</p>
         </div>
     </div>
 </div>

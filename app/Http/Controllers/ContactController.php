@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\ContactService;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -30,11 +31,32 @@ class ContactController extends Controller
     }
 
     public function create() {
-        return "Formulário para criar um Contato";
+        return view('contacts.contactRegister');
     }
 
-    public function createSubmit() {
-        return "Criando um Contato";
+    public function createSubmit(Request $request) {
+        // Buscar o usuário
+        $id = session('user.id');
+        $user = UserService::getUserByDecryptedId($id);
+
+        if (!$user) {
+            return redirect()->back()->withErrors(['notFoundUser' => 'Usuário não encontrado.']);
+        }
+
+        // Validar os dados para criar Contato
+        $validatedData = ContactService::validatedDataToRegisterContact($request->all());
+
+        if ($validatedData->fails()) {
+            return redirect()->back()->withInput()->withErrors($validatedData);
+        }
+        // Criar contato
+        $statusToCreate = ContactService::createContact($user->id, $request->name, $request->category);
+
+        if (!$statusToCreate) {
+            return redirect()->back()->withInput()->withErrors(['FailedToCreateContact' => 'Falha ao criar contato, tente novamente.']);
+        }
+
+        return redirect()->route('contact.index')->with('success', 'Contato cadastrado com sucesso!');
     }
 
     public function read($id) {

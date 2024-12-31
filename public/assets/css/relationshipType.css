@@ -1,0 +1,35 @@
+.alert {
+    max-width: 30%;
+    text-align: center;
+    padding: 3px;
+}
+
+.familia {
+    background-color: #cce5ff; 
+    color: #004085; 
+}
+
+.amigo {
+    background-color: #d4edda; 
+    color: #155724; 
+}
+
+.trabalho {
+    background-color: #fff3cd; 
+    color: #856404; 
+}
+
+.romantico {
+    background-color: #f8d7da; 
+    color: #721c24; 
+}
+
+.conhecido {
+    background-color: #e2e3e5; 
+    color: #383d41; 
+}
+
+.outros {
+    background-color: #d6d8d9; 
+    color: #343a40; 
+}

@@ -8,6 +8,10 @@
         <div class="row justify-content-center">
             <div class="col">
 
+                @session('sucess')
+                    {{ $message }}
+                @endsession
+                
                 @if (count($contacts) == 0)
                     {{-- Caso não tenha contatos --}}
                     <div class="row mt-5">
@@ -27,7 +31,7 @@
                     </div>
 
                     @foreach ($contacts as $contact)
-                        @include('contact')
+                        @include('contacts.contact')
                     @endforeach
                 @endif
 

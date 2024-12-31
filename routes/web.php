@@ -36,7 +36,7 @@ Route::controller(ContactController::class)->group(function() {
         Route::middleware([CheckUserLogged::class])->group(function() {
             Route::get('/', 'index')->name('contact.index');
             Route::get('/create', 'create')->name('contact.create');
-            Route::get('/createSubmit', 'createSubmit')->name('contact.createSubmit');
+            Route::POST('/createSubmit', 'createSubmit')->name('contact.createSubmit');
             Route::get('/{id}', 'read')->name('contact.read');
             Route::POST('/update/{id}', 'update')->name('contact.update');
             Route::get('/delete/{id}', 'delete')->name('contact.delete');
