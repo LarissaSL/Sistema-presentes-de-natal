@@ -14,10 +14,10 @@
 
                     {{-- Caso alteração seja feita com sucesso --}}
                     @if (session('success'))
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        {{ session('success') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                      </div>
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            {{ session('success') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
                     @endif
 
                     {{-- Campos para alteração --}}
@@ -70,6 +70,36 @@
 
                     <div class="text-center mt-5">
                         <button type="submit" class="btn btn-primary">Atualizar Perfil</button>
+                        
+                        <!-- Modal para confirmar se vai Desativar a Conta -->
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                            data-bs-target="#staticBackdrop">
+                            Desativar Perfil
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Desativar Perfil</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        {{ session('user.username') }}, tem certeza que deseja desativar seu Perfil?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Fechar</button>
+                                        <a type="button"
+                                            href="{{ route('user.delete', ['id' => session('user.id')]) }}"
+                                            class="btn btn-danger">Prosseguir</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
             </div>
         </div>

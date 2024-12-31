@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 
@@ -83,5 +84,21 @@ class UserController extends Controller
         }
 
         return redirect()->back()->with('success', 'Alterações feitas com sucesso!');
+    }
+
+    public function delete($id) {
+        // Buscar o Usuário
+        $user = UserService::getUserByDecryptedId($id);
+
+        if (!$user) {
+            return redirect()->back()->withErrors(['notFoundUser' => 'Usuário não encontrado.']);
+        }
+
+        // Criando o Model do Usuario e criando o Deleted_at
+        $userModel = User::find($user->id);
+        $userModel->deleted_at = date('Y:m:d H:i:s');
+        $userModel->save();
+
+        return AuthController::logout();
     }
 }

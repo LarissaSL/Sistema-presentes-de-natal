@@ -78,13 +78,14 @@ class UserService
         return Validator::make(
             $data,
             [
-                'name' => 'required',
+                'name' => 'required|max:50',
                 'email' => 'required|email|unique:users,email,' . $userId,
                 'password' => 'nullable|min:6|max:50',
                 'passwordConfirmed' => 'nullable|same:password|min:6|max:50',
             ],
             [
                 'name.required' => 'O nome precisa ser preenchido.',
+                'name.max' => 'O nome precisa ter no máximo :max caracteres.',
                 'email.required' => 'O email precisa ser preenchido.',
                 'email.email' => 'Digite um endereço de email válido.',
                 'email.unique' => 'Endereço de email já está em uso.',
@@ -103,13 +104,14 @@ class UserService
         return Validator::make(
             $data,
             [
-                'name' => 'required',
+                'name' => 'required|max:50',
                 'email' => 'required|email|unique:users,email',
                 'password' => 'required|min:6|max:50',
                 'passwordConfirmed' => 'required|same:password|min:6|max:50',
             ],
             [
                 'name.required' => 'O nome precisa ser preenchido.',
+                'name.max' => 'O nome precisa ter no máximo :max caracteres.',
                 'email.required' => 'O email precisa ser preenchido.',
                 'email.email' => 'Digite um endereço de email válido.',
                 'email.unique' => 'Endereço de email já está em uso.',

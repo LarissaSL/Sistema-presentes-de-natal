@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Route;
 Route::controller(AuthController::class)->group(function () {
     Route::get('/login', 'login')->name('auth.login');
     Route::POST('/login', 'loginSubmit')->name('auth.loginSubmit');
-    Route::get('/logout', 'logout')->name('auth.logout');
+    Route::get('/logout', 'logout')->name('auth.logout')->middleware(CheckUserLogged::class);
 });
 
 Route::controller(MainController::class)->group(function () {
@@ -25,6 +25,7 @@ Route::controller(UserController::class)->group(function() {
             Route::get('/dashboard', 'index')->name('user.dashboard');
             Route::get('/my-profile/{id}', 'read')->name('user.myProfile');
             Route::POST('/my-profile/update/{id}', 'update')->name('user.update');
+            Route::get('/my-profile/delete/{id}', 'delete')->name('user.delete');
         });
     });
 });
