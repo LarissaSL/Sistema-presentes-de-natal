@@ -9,7 +9,8 @@ use Illuminate\Support\Facades\Hash;
 
 class UserService
 {
-    public static function createUser($name, $email, $password) {
+    public static function createUser($name, $email, $password)
+    {
         try {
             DB::table('users')->insert([
                 'name' => $name,
@@ -23,7 +24,7 @@ class UserService
 
         return true;
     }
-    
+
     public static function getUserByDecryptedId($encryptedId)
     {
         // Receber o ID e Descriptografar
@@ -39,13 +40,13 @@ class UserService
     {
         try {
             DB::table('users')
-            ->where('id', $userId)
-            ->update([
-                'updated_at' => date('Y:m:d H:i:s'),
-                'email' => $email,
-                'name' => $name,
-                'password' => $password ? bcrypt($password) : DB::raw('password'),
-            ]);
+                ->where('id', $userId)
+                ->update([
+                    'updated_at' => date('Y:m:d H:i:s'),
+                    'email' => $email,
+                    'name' => $name,
+                    'password' => $password ? bcrypt($password) : DB::raw('password'),
+                ]);
         } catch (\Throwable $th) {
             return false;
         }
@@ -129,7 +130,7 @@ class UserService
     public static function loginUser($email, $password)
     {
 
-        // Verificar se o usuário existe e está ativo
+        // Verificar se o usuário existe
         $user = DB::table('users')->where('email', $email)->first();
 
         // Se o usuário não existir ou a senha estiver incorreta

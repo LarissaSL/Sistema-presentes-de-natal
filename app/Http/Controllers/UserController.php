@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Services\UserService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -95,8 +96,7 @@ class UserController extends Controller
         }
 
         // Criando o Model do Usuario e criando o Deleted_at
-        $userModel = User::findOrFail($user->id);
-        $userModel->delete();
+        DB::table('users')->where('id', $user->id)->delete();
 
         return redirect()->route('auth.logout');
     }
