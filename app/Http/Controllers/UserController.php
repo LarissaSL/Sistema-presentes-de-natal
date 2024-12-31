@@ -95,7 +95,7 @@ class UserController extends Controller
             return redirect()->back()->withErrors(['notFoundUser' => 'Usuário não encontrado.']);
         }
 
-        // Criando o Model do Usuario e criando o Deleted_at
+        // Deletando
         DB::table('users')->where('id', $user->id)->delete();
 
         return redirect()->route('auth.logout');
