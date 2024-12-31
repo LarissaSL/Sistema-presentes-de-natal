@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\CheckUserLogged;
@@ -26,6 +27,19 @@ Route::controller(UserController::class)->group(function() {
             Route::get('/my-profile/{id}', 'read')->name('user.myProfile');
             Route::POST('/my-profile/update/{id}', 'update')->name('user.update');
             Route::get('/my-profile/delete/{id}', 'delete')->name('user.delete');
+        });
+    });
+});
+
+Route::controller(ContactController::class)->group(function() {
+    Route::prefix('/user/contact')->group(function (){
+        Route::middleware([CheckUserLogged::class])->group(function() {
+            Route::get('/', 'index')->name('contact.index');
+            Route::get('/create', 'create')->name('contact.create');
+            Route::get('/createSubmit', 'createSubmit')->name('contact.createSubmit');
+            Route::get('/{id}', 'read')->name('contact.read');
+            Route::POST('/update/{id}', 'update')->name('contact.update');
+            Route::get('/delete/{id}', 'delete')->name('contact.delete');
         });
     });
 });
