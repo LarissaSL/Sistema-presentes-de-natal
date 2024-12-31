@@ -29,10 +29,10 @@
                     </div>
 
                     <small class="text-secondary"><span class="opacity-75 me-2">Criado em:
-                        </span><strong>{{ date('Y-m-d H:i:s', strtotime($contact->created_at)) }}</strong></small>
+                        </span><strong>{{ date('d/m/Y à\s H\hi', strtotime($contact->created_at)) }}</strong></small>
                     @if ($contact->updated_at && $contact->created_at != $contact->updated_at)
                         <small class="text-secondary ms-5"><span class="opacity-75 me-2">Atualizado em:
-                            </span><strong>{{ date('Y-m-d H:i:s', strtotime($contact->updated_at)) }}</strong></small>
+                            </span><strong>{{ date('d/m/Y à\s H\hi', strtotime($contact->updated_at)) }}</strong></small>
                     @endif
                 </div>
                 <div class="col text-end">
