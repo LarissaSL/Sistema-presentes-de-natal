@@ -129,7 +129,7 @@ class UserService
     public static function loginUser($email, $password)
     {
 
-        // Verificar se o usuário existe
+        // Verificar se o usuário existe e está ativo
         $user = DB::table('users')->where('email', $email)->first();
 
         // Se o usuário não existir ou a senha estiver incorreta

@@ -34,7 +34,7 @@ class AuthController extends Controller
         return redirect()->route('user.dashboard');
     }
 
-    public static function logout() {
+    public function logout() {
         session()->forget('user');
         return redirect()->route('main.index');
     }

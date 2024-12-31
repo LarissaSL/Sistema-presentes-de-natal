@@ -95,10 +95,9 @@ class UserController extends Controller
         }
 
         // Criando o Model do Usuario e criando o Deleted_at
-        $userModel = User::find($user->id);
-        $userModel->deleted_at = date('Y:m:d H:i:s');
-        $userModel->save();
+        $userModel = User::findOrFail($user->id);
+        $userModel->delete();
 
-        return AuthController::logout();
+        return redirect()->route('auth.logout');
     }
 }
