@@ -24,6 +24,7 @@ class CheckUser
             return redirect()->back()->withErrors(['notFoundUser' => 'Usuário não encontrado.']);
         }
 
+        // Criando o atributo
         $request->attributes->set('user', $user);
 
         return $next($request);
