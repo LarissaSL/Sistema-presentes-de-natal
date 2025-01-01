@@ -9,6 +9,17 @@ use Illuminate\Validation\Rule;
 
 class ContactService
 {
+    public static function getContactByDecryptedId($encryptedId)
+    {
+        // Receber o ID e Descriptografar
+        $contactId = OperationsService::decryptId($encryptedId);
+
+        // Verificar se o Contato existe
+        $contact = DB::table('contacts')->where('id', $contactId)->first();
+
+        return $contact;
+    }
+
     public function createContact($userId, $name, $relationType)
     {
         try {
@@ -41,5 +52,4 @@ class ContactService
             ]
         );
     }
-
 }
