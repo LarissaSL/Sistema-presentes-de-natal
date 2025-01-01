@@ -7,6 +7,12 @@ use App\Services\UserService;
 
 class AuthController extends Controller
 {
+    protected $userService;
+
+    public function __construct(UserService $userService) {
+        $this->userService = $userService;
+    }
+
     public function login()  {
         return view('login');
     }
@@ -14,7 +20,7 @@ class AuthController extends Controller
     public function loginSubmit(Request $request)
     {
         // Validando os dados
-        $validatedDataLogin = UserService::validatedDataLogin($request->all());
+        $validatedDataLogin = $this->userService->validatedLoginData($request->all());
 
         if ($validatedDataLogin->fails()) {
             return redirect()->back()->withInput()->withErrors($validatedDataLogin);
@@ -25,7 +31,7 @@ class AuthController extends Controller
         $password = $request->password;
 
         // Realizar o Login
-        $validatedLogin = UserService::loginUser($email, $password);
+        $validatedLogin = $this->userService->loginUser($email, $password);
 
         if (!$validatedLogin) {
             return redirect()->back()->withInput()->with('loginError', 'Email ou senha incorretos.');

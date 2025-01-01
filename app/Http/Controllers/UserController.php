@@ -2,13 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
+    protected $userService;
+
+    public function __construct(UserService $userService)
+    {
+        $this->userService = $userService;
+    }
+
     public function index()
     {
         return view('users.dashboard');
@@ -20,21 +26,21 @@ class UserController extends Controller
 
     public function registerSubmit(Request $request) {
         // Validando os dados de Cadastro
-        $validatedData = UserService::validatedUserDataToRegister($request->all());
+        $validatedData = $this->userService->validatedUserDataToRegister($request->all());
 
         if ($validatedData->fails()) {
             return redirect()->back()->withInput()->withErrors($validatedData);
         }
 
         // Enviando os dados para realizar cadastro
-        $statusToRegister = UserService::createUser($request->name, $request->email, $request->password);
+        $statusToRegister = $this->userService->createUser($request->name, $request->email, $request->password);
 
         if (!$statusToRegister){
             return redirect()->back()->withErrors(['registerFailed' => 'Falha ao cadastrar, tente novamente.']);
         }
 
         // Realizar o Login
-        $validatedLogin = UserService::loginUser($request->email, $request->password);
+        $validatedLogin = $this->userService->loginUser($request->email, $request->password);
 
         if (!$validatedLogin) {
             return redirect()->back()->withInput()->with('loginError', 'Email ou senha incorretos.');
@@ -43,14 +49,10 @@ class UserController extends Controller
         return redirect()->route('user.dashboard');
     }
 
-    public function read($id)
+    public function read(Request $request)
     {
         // Buscar o Usuário
-        $user = UserService::getUserByDecryptedId($id);
-
-        if (!$user) {
-            return redirect()->back()->withErrors(['notFoundUser' => 'Usuário não encontrado.']);
-        }
+        $user = $request->attributes->get('user');
 
         // Enviar os dados para View
         $name = $user->name;
@@ -59,26 +61,20 @@ class UserController extends Controller
         return view('users.my_profile', compact('name', 'email'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        // Buscar o Usuário
-        $user = UserService::getUserByDecryptedId($id);
-
-        if (!$user) {
-            return redirect()->back()->withErrors(['notFoundUser' => 'Usuário não encontrado.']);
-        }
-
-        $userId = $user->id;
+        // Pegar o Usuário
+        $userId = $request->attributes->get('user')->id;
 
         // Validar os campos
-        $validatedData = UserService::validatedUserDataToUpdate($request->all(), $userId);
+        $validatedData = $this->userService->validatedUserDataToUpdate($request->all(), $userId);
 
         if ($validatedData->fails()) {
             return redirect()->back()->withInput()->withErrors($validatedData);
         }
 
         // Fazer o Update dos Campos
-        $statusToUpdate = UserService::updatedUser($request->email, $request->name, $request->password, $userId);
+        $statusToUpdate = $this->userService->updatedUser($request->email, $request->name, $request->password, $userId);
 
         if (!$statusToUpdate) {
             return redirect()->back()->withErrors(['updateFailed' => 'Falha ao alterar, tente novamente.']);
@@ -87,16 +83,12 @@ class UserController extends Controller
         return redirect()->back()->with('success', 'Alterações feitas com sucesso!');
     }
 
-    public function delete($id) {
-        // Buscar o Usuário
-        $user = UserService::getUserByDecryptedId($id);
-
-        if (!$user) {
-            return redirect()->back()->withErrors(['notFoundUser' => 'Usuário não encontrado.']);
-        }
+    public function delete(Request $request) {
+        // Pegar o Usuário
+        $userId = $request->attributes->get('user')->id;
 
         // Deletando
-        DB::table('users')->where('id', $user->id)->delete();
+        DB::table('users')->where('id', $userId)->delete();
 
         return redirect()->route('auth.logout');
     }

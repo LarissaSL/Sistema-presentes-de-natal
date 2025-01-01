@@ -23,11 +23,11 @@ Route::controller(UserController::class)->group(function() {
     Route::POST('/register', 'registerSubmit')->name('user.registerSubmit');
 
     Route::prefix('/user')->group(function (){
-        Route::middleware([CheckUserLogged::class])->group(function() {
-            Route::get('/dashboard', 'index')->name('user.dashboard');
-            Route::get('/my-profile/{id}', 'read')->name('user.myProfile');
-            Route::POST('/my-profile/update/{id}', 'update')->name('user.update');
-            Route::get('/my-profile/delete/{id}', 'delete')->name('user.delete');
+        Route::middleware([CheckUserLogged::class, CheckUser::class])->group(function() {
+            Route::get('/dashboard', 'index')->name('user.dashboard')->withoutMiddleware(CheckUser::class);
+            Route::get('/my-profile', 'read')->name('user.myProfile');
+            Route::POST('/my-profile/update', 'update')->name('user.update');
+            Route::get('/my-profile/delete', 'delete')->name('user.delete');
         });
     });
 });

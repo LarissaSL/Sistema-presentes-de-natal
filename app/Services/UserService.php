@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Hash;
 
 class UserService
 {
-    public static function createUser($name, $email, $password)
+    public function createUser($name, $email, $password)
     {
         try {
             DB::table('users')->insert([
@@ -36,7 +36,7 @@ class UserService
         return $user;
     }
 
-    public static function updatedUser($email, $name, $password, $userId)
+    public function updatedUser($email, $name, $password, $userId)
     {
         try {
             DB::table('users')
@@ -56,7 +56,7 @@ class UserService
         return true;
     }
 
-    public static function validatedLoginData(array $data)
+    public function validatedLoginData(array $data)
     {
         return Validator::make(
             $data,
@@ -74,7 +74,7 @@ class UserService
         );
     }
 
-    public static function validatedUserDataToUpdate(array $data, $userId)
+    public function validatedUserDataToUpdate(array $data, $userId)
     {
         return Validator::make(
             $data,
@@ -100,7 +100,7 @@ class UserService
         );
     }
 
-    public static function validatedUserDataToRegister(array $data)
+    public function validatedUserDataToRegister(array $data)
     {
         return Validator::make(
             $data,
@@ -127,7 +127,7 @@ class UserService
         );
     }
 
-    public static function loginUser($email, $password)
+    public function loginUser($email, $password)
     {
 
         // Verificar se o usuário existe
