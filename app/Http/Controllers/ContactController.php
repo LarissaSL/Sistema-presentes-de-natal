@@ -44,7 +44,7 @@ class ContactController extends Controller
         }
 
         // Validar os dados para criar Contato
-        $validatedData = ContactService::validatedDataToRegisterContact($request->all());
+        $validatedData = ContactService::validatedContactData($request->all());
 
         if ($validatedData->fails()) {
             return redirect()->back()->withInput()->withErrors($validatedData);

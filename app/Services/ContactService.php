@@ -25,7 +25,7 @@ class ContactService
         return true;
     }
 
-    public static function validatedDataToRegisterContact(array $data)
+    public static function validatedContactData(array $data)
     {
         return Validator::make(
             $data,
