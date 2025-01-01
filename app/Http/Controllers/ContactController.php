@@ -3,24 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Services\ContactService;
-use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class ContactController extends Controller
 {
-    public function index() {
-        // Buscar o Usuário
-        $id = session('user.id');
-        $user = UserService::getUserByDecryptedId($id);
+    protected $contactService;
 
-        if (!$user) {
-            return redirect()->back()->withErrors(['notFoundUser' => 'Usuário não encontrado.']);
-        }
+    public function __construct(ContactService $contactService)
+    {
+        $this->contactService = $contactService;
+    }
+
+    public function index(Request $request) {
+        // Pegando o usuário
+        $userId = $request->attributes->get('user')->id;
 
         // Buscar todos os Contatos desse usuário (Usando Query Builder)
         $contacts = DB::table('contacts')
-                        ->where('user_id', $user->id) 
+                        ->where('user_id', $userId) 
                         ->get()
                         ->toArray(); 
 
@@ -35,22 +36,17 @@ class ContactController extends Controller
     }
 
     public function createSubmit(Request $request) {
-        // Buscar o usuário
-        $id = session('user.id');
-        $user = UserService::getUserByDecryptedId($id);
-
-        if (!$user) {
-            return redirect()->back()->withErrors(['notFoundUser' => 'Usuário não encontrado.']);
-        }
+        // Pegando o usuário
+        $userId = $request->attributes->get('user')->id;
 
         // Validar os dados para criar Contato
-        $validatedData = ContactService::validatedContactData($request->all());
+        $validatedData = $this->contactService->validatedContactData($request->all());
 
         if ($validatedData->fails()) {
             return redirect()->back()->withInput()->withErrors($validatedData);
         }
         // Criar contato
-        $statusToCreate = ContactService::createContact($user->id, $request->name, $request->category);
+        $statusToCreate = $this->contactService->createContact($userId, $request->name, $request->category);
 
         if (!$statusToCreate) {
             return redirect()->back()->withInput()->withErrors(['FailedToCreateContact' => 'Falha ao criar contato, tente novamente.']);
@@ -59,11 +55,13 @@ class ContactController extends Controller
         return redirect()->route('contact.listContacts')->with('success', 'Contato cadastrado com sucesso!');
     }
 
-    public function read($id) {
-        return "Lendo um Contato";
+    public function update(Request $request, $id) {
+        // Pegando o usuário
+        $userId = $request->attributes->get('user')->id;
+        return "Atualizando o contact de id: $id e do usuário: $userId";
     }
 
-    public function update($id) {
+    public function updateSubmit() {
         return "Atualizando um Contato";
     }
 

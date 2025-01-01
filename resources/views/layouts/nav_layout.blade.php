@@ -24,7 +24,7 @@
         <a class="nav-link" href="{{ route('user.myProfile', ['id' => session('user.id')]) }}">Meu Perfil</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="{{ route('contact.index') }}">Contatos</a>
+        <a class="nav-link" href="{{ route('contact.listContacts') }}">Contatos</a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="#">Presentes</a>

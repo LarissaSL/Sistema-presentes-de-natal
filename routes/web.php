@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\UserController;
+use App\Http\Middleware\CheckUser;
 use App\Http\Middleware\CheckUserLogged;
 use Illuminate\Support\Facades\Route;
 
@@ -33,9 +34,9 @@ Route::controller(UserController::class)->group(function() {
 
 Route::controller(ContactController::class)->group(function() {
     Route::prefix('/user/contact')->group(function (){
-        Route::middleware([CheckUserLogged::class])->group(function() {
-            Route::get('/', 'index')->name('contact.index');
-            Route::get('/create', 'create')->name('contact.create');
+        Route::middleware([CheckUserLogged::class, CheckUser::class])->group(function() {
+            Route::get('/', 'index')->name('contact.listContacts');
+            Route::get('/create', 'create')->name('contact.create')->withoutMiddleware([CheckUser::class]);
             Route::POST('/createSubmit', 'createSubmit')->name('contact.createSubmit');
             Route::get('/updtate/{id}', 'update')->name('contact.update');
             Route::POST('/updateSubmit', 'updateSubmit')->name('contact.updateSubmit');

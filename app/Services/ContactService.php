@@ -9,7 +9,7 @@ use Illuminate\Validation\Rule;
 
 class ContactService
 {
-    public static function createContact($userId, $name, $relationType)
+    public function createContact($userId, $name, $relationType)
     {
         try {
             DB::table('contacts')->insert([
@@ -25,7 +25,7 @@ class ContactService
         return true;
     }
 
-    public static function validatedContactData(array $data)
+    public function validatedContactData(array $data)
     {
         return Validator::make(
             $data,
