@@ -36,7 +36,7 @@
                     @endif
                 </div>
                 <div class="col text-end">
-                    <a href="{{ route('contact.read', ['id' => Crypt::encrypt($contact->id)]) }}"
+                    <a href="{{ route('contact.update', ['id' => Crypt::encrypt($contact->id)]) }}"
                         class="me-3 text-decoration-none">
                         <ion-icon name="create" style="font-size: 30px;"></ion-icon>
                     </a>

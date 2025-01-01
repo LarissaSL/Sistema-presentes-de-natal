@@ -26,7 +26,7 @@ class ContactController extends Controller
 
 
         // Carregar a View com os Contatos
-        return view('contacts.index', compact('contacts'));
+        return view('contacts.listContacts', compact('contacts'));
     
     }
 
@@ -56,7 +56,7 @@ class ContactController extends Controller
             return redirect()->back()->withInput()->withErrors(['FailedToCreateContact' => 'Falha ao criar contato, tente novamente.']);
         }
 
-        return redirect()->route('contact.index')->with('success', 'Contato cadastrado com sucesso!');
+        return redirect()->route('contact.listContacts')->with('success', 'Contato cadastrado com sucesso!');
     }
 
     public function read($id) {
