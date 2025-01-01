@@ -20,7 +20,7 @@ class UserController extends Controller
 
     public function registerSubmit(Request $request) {
         // Validando os dados de Cadastro
-        $validatedData = UserService::validatedDataToRegisterUser($request->all());
+        $validatedData = UserService::validatedUserDataToRegister($request->all());
 
         if ($validatedData->fails()) {
             return redirect()->back()->withInput()->withErrors($validatedData);
@@ -71,7 +71,7 @@ class UserController extends Controller
         $userId = $user->id;
 
         // Validar os campos
-        $validatedData = UserService::validatedDataToUpdateUser($request->all(), $userId);
+        $validatedData = UserService::validatedUserDataToUpdate($request->all(), $userId);
 
         if ($validatedData->fails()) {
             return redirect()->back()->withInput()->withErrors($validatedData);

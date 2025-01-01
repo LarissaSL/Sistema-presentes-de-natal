@@ -56,7 +56,7 @@ class UserService
         return true;
     }
 
-    public static function validatedDataLogin(array $data)
+    public static function validatedLoginData(array $data)
     {
         return Validator::make(
             $data,
@@ -74,7 +74,7 @@ class UserService
         );
     }
 
-    public static function validatedDataToUpdateUser(array $data, $userId)
+    public static function validatedUserDataToUpdate(array $data, $userId)
     {
         return Validator::make(
             $data,
@@ -100,7 +100,7 @@ class UserService
         );
     }
 
-    public static function validatedDataToRegisterUser(array $data)
+    public static function validatedUserDataToRegister(array $data)
     {
         return Validator::make(
             $data,
