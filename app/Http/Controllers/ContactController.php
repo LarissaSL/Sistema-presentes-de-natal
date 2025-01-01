@@ -55,10 +55,16 @@ class ContactController extends Controller
         return redirect()->route('contact.listContacts')->with('success', 'Contato cadastrado com sucesso!');
     }
 
-    public function update(Request $request, $id) {
-        // Pegando o usuário
-        $userId = $request->attributes->get('user')->id;
-        return "Atualizando o contact de id: $id e do usuário: $userId";
+    public function update($id) {
+        // Buscar o Contato
+
+
+        // Exibir as informações do Contato
+
+
+        // Retornar a view
+        
+        return "Atualizando o contact de id: $id";
     }
 
     public function updateSubmit() {
