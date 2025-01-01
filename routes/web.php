@@ -37,8 +37,8 @@ Route::controller(ContactController::class)->group(function() {
             Route::get('/', 'index')->name('contact.index');
             Route::get('/create', 'create')->name('contact.create');
             Route::POST('/createSubmit', 'createSubmit')->name('contact.createSubmit');
-            Route::get('/{id}', 'read')->name('contact.read');
-            Route::POST('/update/{id}', 'update')->name('contact.update');
+            Route::get('/updtate/{id}', 'update')->name('contact.update');
+            Route::POST('/updateSubmit', 'updateSubmit')->name('contact.updateSubmit');
             Route::get('/delete/{id}', 'delete')->name('contact.delete');
         });
     });
