@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+    --color-background: #EADCB2;
+    --color-text-dark: #00140A;
+    --color-text-white: #F5E9E2;
+    --color-contrast1: #ca1d31;
+    --color-contrast2: #3d53a5;
+    --color-contrast3: #2879e2;
+    --color-contrast4: #35a531;
+    --color-contrast5: #e7b41b;
+}
+
+html body{
+    background-color: var(--color-background);
+    font-family: "Montserrat", serif;
+    margin: 0;
+}
+
+/* Formularios */
+.form-label {
+    font-weight: 500;
+}
+
+.btn-primary {
+    background-color: var(--color-contrast3);
+}
+
+.btn {
+    width: 200px;
+}
+
