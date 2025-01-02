@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Contact;
 use App\Services\ContactService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -86,7 +85,7 @@ class ContactController extends Controller
         }
 
         // Retornar
-        return redirect()->back()->with('success', 'Alterações feitas com sucesso!');
+        return redirect()->route('contact.listContacts')->with('success', 'Alterações feitas com sucesso!');
     }
 
     public function delete(Request $request)
