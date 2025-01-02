@@ -1,32 +1,37 @@
-<div class="row mb-3 align-items-center">
-    <div class="col">
-        <a href="{{ route('user.dashboard') }}">
-            <img src="{{ asset('assets/images/arvore-de-natal.png') }}" alt="Natal" class="img-fluid" style="max-width: 60px;">
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        {{-- Logo e nome --}}
+        <a class="navbar-brand d-flex align-items-center" href="{{ route('user.dashboard') }}">
+            <img src="{{ asset('assets/images/arvore-de-natal.png') }}" alt="Logo" width="30" height="30" class="d-inline-block align-text-top me-2">
+            <span class="web-site-name">HO HO HO</span>
         </a>
-    </div>
-    <div class="col text-center">
-        Então é <span class="text-warning">Natal!</span>
-    </div>
-    <div class="col">
-        <div class="d-flex justify-content-end align-items-center">
-            <span class="me-3">
-                <i class="fa-solid fa-user-circle fa-lg text-secondary me-3"></i>{{ session('user.username') }}
-            </span>
-            <a href="{{ route('auth.logout') }}" class="btn btn-warning">
-                Logout<i class="fa-solid fa-arrow-right-from-bracket ms-2"></i>
-            </a>
+
+        {{-- Botão Hamburguer para telas pequenas --}}
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        {{-- Opções e perfil/logout --}}
+        <div class="collapse navbar-collapse" id="navbarNav">
+            {{-- Lista de opções centralizada em telas grandes --}}
+            <ul class="navbar-nav mx-auto d-flex flex-column flex-lg-row align-items-center mb-5 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('user.myProfile', ['id' => session('user.id')]) }}">Meu Perfil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('contact.listContacts') }}">Contatos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Presentes</a>
+                </li>
+            </ul>
+
+            {{-- Nome do Usuario e Logout --}}
+            <div class="d-flex flex-column flex-lg-row align-items-center justify-content-center">
+                <a href="{{ route('auth.logout') }}" class="btn btn-warning align-items-center mb-3 mb-lg-0">
+                    Logout <i class="fa-solid fa-arrow-right-from-bracket ms-2"></i>
+                </a>
+            </div>
         </div>
     </div>
-</div>
-
-<ul class="nav justify-content-center">
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('user.myProfile', ['id' => session('user.id')]) }}">Meu Perfil</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('contact.listContacts') }}">Contatos</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="#">Presentes</a>
-    </li>
-</ul>
+</nav>
