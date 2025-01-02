@@ -1,35 +1,40 @@
-.alert {
-    max-width: 30%;
+#familia.alert ,
+#amigo.alert,
+#trabalho.alert, 
+#romantico.alert, 
+#conhecido.alert, 
+#outros.alert {
+    max-width: 210px;
     text-align: center;
     padding: 3px;
 }
 
-.familia {
+#familia {
     background-color: #cce5ff; 
     color: #004085; 
 }
 
-.amigo {
+#amigo{
     background-color: #d4edda; 
     color: #155724; 
 }
 
-.trabalho {
+#trabalho {
     background-color: #fff3cd; 
     color: #856404; 
 }
 
-.romantico {
+#romantico{
     background-color: #f8d7da; 
     color: #721c24; 
 }
 
-.conhecido {
-    background-color: #e2e3e5; 
-    color: #383d41; 
+#conhecido {
+    background-color: #ebcceb; 
+    color: #5f255f
 }
 
-.outros {
+#outros {
     background-color: #d6d8d9; 
     color: #343a40; 
 }

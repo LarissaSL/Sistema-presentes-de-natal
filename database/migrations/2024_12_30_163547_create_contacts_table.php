@@ -19,7 +19,7 @@ return new class extends Migration
                 'Familia',
                 'Amigo',
                 'Trabalho',
-                'Romântico',
+                'Romantico',
                 'Conhecido',
                 'Outros'
             ]);

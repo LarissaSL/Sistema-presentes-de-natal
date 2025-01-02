@@ -16,7 +16,7 @@ class GiftsSeed extends Seeder
         // Criar multiplos presentes
         DB::table('gifts')->insert([
             [
-                'contact_id' => 8,
+                'contact_id' => 17,
                 'name' => 'XBOX 360',
                 'description' => 'Um videogame da microsoft.',
                 'price' => 600.60,
@@ -24,7 +24,7 @@ class GiftsSeed extends Seeder
                 'created_at' => date('Y-m-d H:i:s'),
             ],
             [
-                'contact_id' => 8,
+                'contact_id' => 178,
                 'name' => 'PS2',
                 'description' => 'Um videogame da antigo de colecionador.',
                 'price' => 800.99,
@@ -32,7 +32,7 @@ class GiftsSeed extends Seeder
                 'created_at' => date('Y-m-d H:i:s'),
             ],
             [
-                'contact_id' => 7,
+                'contact_id' => 18,
                 'name' => 'XBOX 360',
                 'description' => 'Um videogame da microsoft.',
                 'price' => 600.60,
@@ -40,7 +40,7 @@ class GiftsSeed extends Seeder
                 'created_at' => date('Y-m-d H:i:s'),
             ],
             [
-                'contact_id' => 6,
+                'contact_id' => 19,
                 'name' => 'PS2',
                 'description' => 'Um videogame da antigo de colecionador.',
                 'price' => 800.99,

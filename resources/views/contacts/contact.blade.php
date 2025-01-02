@@ -16,11 +16,11 @@
                     <h4 class="text-dark">{{ $contact->name }}</h4>
 
 
-                    <div class="alert {{ match ($contact->relationship_type) {
+                    <div class="alert" id="{{ match ($contact->relationship_type) {
                         'Familia' => 'familia',
                         'Amigo' => 'amigo',
                         'Trabalho' => 'trabalho',
-                        'Romântico' => 'romantico',
+                        'Romantico' => 'romantico',
                         'Conhecido' => 'conhecido',
                         default => 'outros',
                     } }}"

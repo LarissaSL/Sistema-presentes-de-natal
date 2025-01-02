@@ -98,16 +98,24 @@ class ContactController extends Controller
         $contactId = $contact->id;
 
         // Mostrar a qtd de presentes vinculados a esse Contato
-        $numberOfGifts = DB::table('gifts')
+        $gifts = DB::table('gifts')
             ->where('contact_id', $contactId)
-            ->count();
+            ->get()
+            ->toArray();
 
         // Enviar a view
-        return view('contacts.contactConfirmationDelete', compact('contactName', 'contactRelationshipType', 'numberOfGifts'));
+        return view('contacts.contactConfirmationDelete', compact('contactId','contactName', 'contactRelationshipType', 'gifts'));
     }
 
-    public function deleteSubmit($id)
+    public function deleteSubmit(Request $request)
     {
-        return "Deletando um Contato";
+        // Pegando contato
+        $contact = $request->attributes->get('contact');
+
+        // Deletando os presentes e contato
+        DB::table('gifts')->where('contact_id', $contact->id)->delete();
+        DB::table('contacts')->where('id', $contact->id)->delete();
+
+        return redirect()->route('contact.listContacts')->with('success', 'Contato excluido com sucesso!');
     }
 }
