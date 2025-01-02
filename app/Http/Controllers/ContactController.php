@@ -16,27 +16,29 @@ class ContactController extends Controller
         $this->contactService = $contactService;
     }
 
-    public function index(Request $request) {
+    public function index(Request $request)
+    {
         // Pegando o usuário
         $userId = $request->attributes->get('user')->id;
 
         // Buscar todos os Contatos desse usuário (Usando Query Builder)
         $contacts = DB::table('contacts')
-                        ->where('user_id', $userId) 
-                        ->get()
-                        ->toArray(); 
+            ->where('user_id', $userId)
+            ->get()
+            ->toArray();
 
 
         // Carregar a View com os Contatos
         return view('contacts.listContacts', compact('contacts'));
-    
     }
 
-    public function create() {
+    public function create()
+    {
         return view('contacts.contactRegister');
     }
 
-    public function createSubmit(Request $request) {
+    public function createSubmit(Request $request)
+    {
         // Pegando o usuário
         $userId = $request->attributes->get('user')->id;
 
@@ -54,7 +56,8 @@ class ContactController extends Controller
         return redirect()->route('contact.listContacts')->with('success', 'Contato cadastrado com sucesso!');
     }
 
-    public function update(Request $request) {
+    public function update(Request $request)
+    {
         // Pegando contato
         $contact = $request->attributes->get('contact');
 
@@ -65,7 +68,8 @@ class ContactController extends Controller
         return view('contacts.contactUpdate', compact('contactName', 'contactRelationshipType'));
     }
 
-    public function updateSubmit(Request $request) {
+    public function updateSubmit(Request $request)
+    {
         // Pegando contato
         $contact = $request->attributes->get('contact');
 
@@ -85,7 +89,25 @@ class ContactController extends Controller
         return redirect()->back()->with('success', 'Alterações feitas com sucesso!');
     }
 
-    public function delete($id) {
+    public function delete(Request $request)
+    {
+        // Pegando contato
+        $contact = $request->attributes->get('contact');
+        $contactName = $contact->name;
+        $contactRelationshipType = $contact->relationship_type;
+        $contactId = $contact->id;
+
+        // Mostrar a qtd de presentes vinculados a esse Contato
+        $numberOfGifts = DB::table('gifts')
+            ->where('contact_id', $contactId)
+            ->count();
+
+        // Enviar a view
+        return view('contacts.contactConfirmationDelete', compact('contactName', 'contactRelationshipType', 'numberOfGifts'));
+    }
+
+    public function deleteSubmit($id)
+    {
         return "Deletando um Contato";
     }
 }
