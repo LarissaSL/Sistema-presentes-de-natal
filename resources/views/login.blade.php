@@ -8,7 +8,7 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                <h1>HO HO HO</h1>
+                <h1 class="web-site-name">HO HO HO</h1>
                 <h2>Então é natal</h2>
                 <img src="{{ asset('assets/images/arvore-de-natal.png') }}" alt="" srcset="">
             </div>

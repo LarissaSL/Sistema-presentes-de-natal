@@ -26,7 +26,31 @@ html body{
     background-color: var(--color-contrast3);
 }
 
-.btn {
+.btn-danger {
+    background-color: var(--color-contrast1);
+}
+
+.btn{
     width: 200px;
+    font-weight: 500;
+}
+
+
+/* Nav */
+.web-site-name {
+    font-family: "Bungee Shade", serif;
+    font-weight: bold;
+    color: transparent;
+    background: linear-gradient(45deg, #0a58ca, #dc3545);
+    -webkit-background-clip: text;
+    background-clip: text;   
+}
+
+
+@media (min-width: 992px)  {
+    .nav-link:hover{
+        font-weight: 700;
+        color: var(--color-contrast4);
+    }
 }
 
