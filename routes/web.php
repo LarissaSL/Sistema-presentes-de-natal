@@ -37,7 +37,7 @@ Route::controller(ContactController::class)->group(function() {
         Route::get('/create', 'create')->name('contact.create');
         Route::post('/createSubmit', 'createSubmit')->name('contact.createSubmit');
         Route::get('/update/{id}', 'update')->name('contact.update')->middleware(CheckContact::class);
-        Route::post('/updateSubmit', 'updateSubmit')->name('contact.updateSubmit');
+        Route::post('/updateSubmit/{id}', 'updateSubmit')->name('contact.updateSubmit')->middleware(CheckContact::class);
         Route::get('/delete/{id}', 'delete')->name('contact.delete');
     });
 });

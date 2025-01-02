@@ -22,7 +22,7 @@ class CheckContact
         $contact = ContactService::getContactByDecryptedId($id);
 
         if (!$contact) {
-            return redirect()->back()->withErrors(['contactNotFound' => 'Contato não encontrado.']);
+            return redirect()->route('contact.listContacts')->withErrors(['contactNotFound' => 'Contato não encontrado.']);
         }
 
         // Criando o atributo

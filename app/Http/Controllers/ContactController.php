@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Contact;
 use App\Services\ContactService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -41,13 +42,11 @@ class ContactController extends Controller
 
         // Validar os dados para criar Contato
         $validatedData = $this->contactService->validatedContactData($request->all());
-
         if ($validatedData->fails()) {
             return redirect()->back()->withInput()->withErrors($validatedData);
         }
         // Criar contato
         $statusToCreate = $this->contactService->createContact($userId, $request->name, $request->category);
-
         if (!$statusToCreate) {
             return redirect()->back()->withInput()->withErrors(['FailedToCreateContact' => 'Falha ao criar contato, tente novamente.']);
         }
@@ -56,13 +55,34 @@ class ContactController extends Controller
     }
 
     public function update(Request $request) {
-        $contactId = $request->attributes->get('contact')->id;
-        
-        return "Atualizando o contact de id: $contactId";
+        // Pegando contato
+        $contact = $request->attributes->get('contact');
+
+        // Retornar a view exibindo Nome e Categoria
+        $contactName = $contact->name;
+        $contactRelationshipType = $contact->relationship_type;
+
+        return view('contacts.contactUpdate', compact('contactName', 'contactRelationshipType'));
     }
 
-    public function updateSubmit() {
-        return "Atualizando um Contato";
+    public function updateSubmit(Request $request) {
+        // Pegando contato
+        $contact = $request->attributes->get('contact');
+
+        // Validar os dados de atualização
+        $validatedData = $this->contactService->validatedContactData($request->all());
+        if ($validatedData->fails()) {
+            return redirect()->back()->withInput()->withErrors($validatedData);
+        }
+
+        // Atualizar
+        $statusToUpdate = $this->contactService->updateContact($contact->id, $request->name, $request->category);
+        if (!$statusToUpdate) {
+            return redirect()->back()->withErrors(['updateFailed' => 'Falha ao alterar, tente novamente.']);
+        }
+
+        // Retornar
+        return redirect()->back()->with('success', 'Alterações feitas com sucesso!');
     }
 
     public function delete($id) {

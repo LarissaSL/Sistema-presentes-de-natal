@@ -36,6 +36,21 @@ class ContactService
         return true;
     }
 
+    public function updateContact($contactId, $name, $relationType) {
+        try{
+            DB::table('contacts')
+            ->where('id', $contactId)
+            ->update([
+                'updated_at' => date('Y:m:d H:i:s'),
+                'name' => $name,
+                'relationship_type' => $relationType
+            ]);
+        } catch (\Throwable $th) {
+            return false;
+        }
+        return true;
+    }
+
     public function validatedContactData(array $data)
     {
         return Validator::make(
