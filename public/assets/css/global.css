@@ -30,6 +30,11 @@ html body{
     background-color: var(--color-contrast1);
 }
 
+.btn.btn-secondary.px-3{
+    background-color: var(--color-contrast4);
+    border: none;
+}
+
 .btn{
     width: 200px;
     font-weight: 500;
