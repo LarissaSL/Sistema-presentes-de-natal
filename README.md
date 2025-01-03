@@ -48,7 +48,45 @@ Dentro do bash do container, execute o seguinte comando para atualizar as depend
 composer update
 ```
 
+Aqui está a atualização com o **passo 6** que você pediu: 
+
 ---
+
+### 5. Atualize as Dependências com o Composer
+
+Dentro do bash do container, execute o seguinte comando para atualizar as dependências do PHP:
+
+```bash
+composer update
+```
+
+### 6. Rode as Migrations e Seeders(Opcional)
+
+Após atualizar as dependências, rode as migrations para configurar o banco de dados:
+
+```bash
+php artisan migrate
+```
+
+Se desejar, você pode utilizar os seeders para criar usuários e presentes que são usados na funcionalidade de deletar contatos.
+
+#### Comandos para os Seeders:
+
+- **Usuários**:  
+  Para criar os usuários com e-mails `user1@gmail.com`, `user2@gmail.com`, e `user3@gmail.com` (todos com a senha `123456`), execute:  
+
+  ```bash
+  php artisan db:seed UserSeeder
+  ```
+
+- **Presentes**:  
+  Para adicionar presentes ao banco de dados, execute:  
+
+  ```bash
+  php artisan db:seed GiftsSeeder
+  ```
+
+--- 
 
 ## 🛠️ Configurações do Projeto
 
