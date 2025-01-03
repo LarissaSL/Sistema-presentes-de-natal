@@ -35,6 +35,16 @@ html body{
     font-weight: 500;
 }
 
+h1.text-center.mb-4.mt-5{
+    font-weight: 700;
+    color: var(--color-contrast2);
+}
+
+.text-center.mt-5{
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+}
 
 /* Nav */
 .web-site-name {
