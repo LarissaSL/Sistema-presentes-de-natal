@@ -2,10 +2,6 @@
 
 @include('layouts.nav_layout')
 
-@section('css')
-    <link rel="stylesheet" href="{{ asset('assets/css/profile.css') }}">
-@endsection
-
 @section('content')
     <h1 class="text-center mb-4 mt-5">Meu Perfil</h1>
 
