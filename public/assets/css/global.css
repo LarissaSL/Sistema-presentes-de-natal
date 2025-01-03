@@ -40,6 +40,14 @@ html body{
     font-weight: 500;
 }
 
+/* Aparece apenas caso não tenha contato registrado */
+.btn.btn-secondary.btn-lg.p-3.px-5 {
+    width: auto;
+    background-color: var(--color-contrast4);
+    border: none;
+}
+
+
 h1.text-center.mb-4.mt-5{
     font-weight: 700;
     color: var(--color-contrast2);
